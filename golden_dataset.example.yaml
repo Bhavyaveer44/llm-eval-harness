@@ -1,0 +1,49 @@
+# Golden dataset - "known good" test cases.
+# Add real cases from app's actual failure modes as you find them —
+# that's how these datasets grow in real teams (every bug becomes a permanent regression test).
+
+version: 1
+cases:
+  - id: "refund-policy-basic"
+    prompt: "What is your refund policy?"
+    context: >
+      Refund Policy: Customers may request a full refund within 30 days of
+      purchase, provided they have a valid receipt. Refunds are not issued
+      after the 30-day window under any circumstances. Store credit may be
+      offered at the manager's discretion for late requests.
+    reference: "You can get a full refund within 30 days of purchase if you have a valid receipt. After 30 days, refunds aren't available, though store credit might be offered."
+    judge_rubric: >
+      The response must clearly state the 30-day window and the receipt
+      requirement. It should NOT invent a different time window or promise
+      refunds after 30 days.
+    tags: ["policy", "refunds"]
+    min_similarity: 0.3
+    min_judge_score: 0.7
+
+  - id: "shipping-time"
+    prompt: "How long does shipping take?"
+    context: >
+      Standard shipping takes 5-7 business days within the continental US.
+      Expedited shipping (additional fee) takes 2-3 business days.
+      International shipping is not currently available.
+    reference: "Standard shipping takes 5 to 7 business days. Expedited shipping, for an extra fee, takes 2 to 3 business days. We don't ship internationally yet."
+    judge_rubric: "Must mention both standard and expedited timeframes accurately, and must not claim international shipping is available."
+    tags: ["shipping", "logistics"]
+    min_similarity: 0.3
+    min_judge_score: 0.7
+
+  - id: "password-reset-steps"
+    prompt: "How do I reset my password?"
+    context: >
+      To reset your password: go to the login page, click 'Forgot
+      Password', enter your email, and follow the link sent to your inbox.
+      Reset links expire after 1 hour.
+    judge_rubric: "Must give an actionable, correct sequence of steps matching the context, and should mention the 1-hour link expiry."
+    tags: ["account", "support"]
+    min_judge_score: 0.6
+
+  - id: "creative-tagline"
+    prompt: "Write a short, punchy tagline for a coffee subscription box."
+    judge_rubric: "Should be short (under 12 words), energetic, and clearly about coffee/subscription. No factual grounding needed — this is a creative task."
+    tags: ["creative", "marketing"]
+    min_judge_score: 0.5
