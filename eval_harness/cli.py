@@ -16,8 +16,13 @@ just a shell command that can fail.
 from __future__ import annotations
 
 import sys
+import os
 import click
 from dotenv import load_dotenv
+
+# Fix Windows console encoding issues
+if sys.platform == "win32":
+    os.environ["PYTHONIOENCODING"] = "utf-8"
 
 from .dataset import load_dataset
 from .runner import run_dataset
